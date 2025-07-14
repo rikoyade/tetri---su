@@ -208,3 +208,48 @@ if ('serviceWorker' in navigator) {
 }
 
 rAF = requestAnimationFrame(loop);
+// script.js の一番下に追加
+
+// 各ボタンの要素を取得
+const rotateBtn = document.getElementById('rotate-btn');
+const leftBtn = document.getElementById('left-btn');
+const rightBtn = document.getElementById('right-btn');
+const downBtn = document.getElementById('down-btn');
+
+// 回転ボタンの処理
+rotateBtn.addEventListener('click', function() {
+  if (gameOver) return;
+  const matrix = rotate(tetromino.matrix);
+  if (isValidMove(matrix, tetromino.row, tetromino.col)) {
+    tetromino.matrix = matrix;
+  }
+});
+
+// 左ボタンの処理
+leftBtn.addEventListener('click', function() {
+  if (gameOver) return;
+  const col = tetromino.col - 1;
+  if (isValidMove(tetromino.matrix, tetromino.row, col)) {
+    tetromino.col = col;
+  }
+});
+
+// 右ボタンの処理
+rightBtn.addEventListener('click', function() {
+  if (gameOver) return;
+  const col = tetromino.col + 1;
+  if (isValidMove(tetromino.matrix, tetromino.row, col)) {
+    tetromino.col = col;
+  }
+});
+
+// 下ボタンの処理
+downBtn.addEventListener('click', function() {
+  if (gameOver) return;
+  const row = tetromino.row + 1;
+  if (!isValidMove(tetromino.matrix, row, tetromino.col)) {
+    placeTetromino();
+    return;
+  }
+  tetromino.row = row;
+});
